@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from app.services.TransactionDetailService import storeTransactionDetail, getTransactionDetails
 from datetime import datetime
 import random
+from app.services.BookService import updateBookAvailability
 
 def getTransactions():
   transactions = Transaction.query.all()
@@ -31,6 +32,9 @@ def updateTransaction(id, status):
   transaction = Transaction.query.filter_by(id=id).first()
   transaction.return_date = datetime.utcnow()
   transaction.status = status
+  details = getTransactionDetails(id)
+  for detail in details:
+    updateBookAvailability(detail['id'], 1)
   db.session.commit()
 
 def deleteTransaction(id):
