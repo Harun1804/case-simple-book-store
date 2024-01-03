@@ -18,6 +18,21 @@ def show(id):
   except Exception as e:
     return response.error(str(e))
 
+def available():
+  try:
+    books = BookService.getAvailableBooks()
+    return response.success(books, "Success Get Available Books")
+  except Exception as e:
+    return response.error(str(e))
+
+def updateAvailability(id):
+  try:
+    is_available = request.form.get('is_available')
+    BookService.updateBookAvailability(id, is_available)
+    return response.success([], "Book Availability Has Been Updated")
+  except Exception as e:
+    return response.error(str(e))
+
 def store():
   try:
     title = request.form.get('title')

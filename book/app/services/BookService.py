@@ -7,6 +7,11 @@ def getBooks():
   data = formatter.formatArray(books, singleTransform)
   return data
 
+def getAvailableBooks():
+  books = Book.query.filter_by(is_available=True).all()
+  data = formatter.formatArray(books, singleTransform)
+  return data
+
 def getBook(id):
   book = Book.query.filter_by(id=id).first()
   if not book:
@@ -25,6 +30,11 @@ def updateBook(id, title, author, publisher, year, is_available):
   book.author = author
   book.publisher = publisher
   book.year = year
+  book.is_available = False if is_available == '0' else True
+  db.session.commit()
+
+def updateBookAvailability(id, is_available):
+  book = Book.query.filter_by(id=id).first()
   book.is_available = False if is_available == '0' else True
   db.session.commit()
 

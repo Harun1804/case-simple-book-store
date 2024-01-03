@@ -9,6 +9,14 @@ def books():
   elif request.method == 'POST':
     return BookController.store()
 
+@app.route('/books/availability', methods=['GET'])
+def available():
+  return BookController.available()
+
+@app.route('/books/availability/<id>', methods=['PUT'])
+def updateAvailability(id):
+  return BookController.updateAvailability(id)
+
 @app.route('/books/<id>', methods=['GET','PUT','DELETE'])
 def book(id):
   if request.method == 'GET':
