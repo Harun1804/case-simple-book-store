@@ -9,6 +9,8 @@ def getBooks():
 
 def getBook(id):
   book = Book.query.filter_by(id=id).first()
+  if not book:
+    return False
   data = singleTransform(book)
   return data
 

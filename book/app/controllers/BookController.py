@@ -12,6 +12,8 @@ def index():
 def show(id):
   try:
     book = BookService.getBook(id)
+    if not book:
+      return response.error("Book Not Found", 404)
     return response.success(book, "Success Get Book")
   except Exception as e:
     return response.error(str(e))
@@ -42,9 +44,10 @@ def update(id):
 
 def delete(id):
   try:
-    book = BookService.deleteBook(id)
+    book = BookService.getBook(id)
     if not book:
       return response.error("Book Not Found", 404)
+    BookService.deleteBook(id)
     return response.success([], "Book Has Been Deleted")
   except Exception as e:
     return response.error(str(e))
