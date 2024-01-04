@@ -1,9 +1,9 @@
-from app import app
-from flask import request
+from flask import Blueprint, request
 from app.controllers import BookController
 from flask_jwt_extended import jwt_required
 
-@app.route('/master/books', methods=['GET', 'POST'])
+blueprint = Blueprint('book', __name__, url_prefix='/master/books')
+@blueprint.route('', methods=['GET', 'POST'])
 @jwt_required()
 def books():
   if request.method == 'GET':
@@ -11,7 +11,7 @@ def books():
   elif request.method == 'POST':
     return BookController.create(request.form)
 
-@app.route('/master/books/<id>', methods=['GET','PUT','DELETE'])
+@blueprint.route('/<id>', methods=['GET','PUT','DELETE'])
 @jwt_required()
 def book(id):
   if request.method == 'GET':
