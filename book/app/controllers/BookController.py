@@ -47,6 +47,10 @@ def store():
 
 def update(id):
   try:
+    book = BookService.getBook(id)
+    if not book:
+      return response.error("Book Not Found", 404)
+
     title = request.form.get('title')
     author = request.form.get('author')
     publisher = request.form.get('publisher')
