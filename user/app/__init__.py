@@ -2,7 +2,6 @@ from config import Config
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_swagger_ui import get_swaggerui_blueprint
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
