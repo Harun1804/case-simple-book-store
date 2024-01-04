@@ -1,6 +1,7 @@
 from app.utils import response
 from flask import request
 from app.services import BookService
+from app.validations import StoreBookValidation, UpdateBookValidation
 
 def index():
   try:
@@ -35,6 +36,10 @@ def updateAvailability(id):
 
 def store():
   try:
+    validation = StoreBookValidation.StoreBookValidation().validate(request.form)
+    if validation:
+      return response.validateError(validation)
+
     title = request.form.get('title')
     author = request.form.get('author')
     publisher = request.form.get('publisher')
@@ -47,6 +52,10 @@ def store():
 
 def update(id):
   try:
+    validation = UpdateBookValidation.UpdateBookValidation().validate(request.form)
+    if validation:
+      return response.validateError(validation)
+
     book = BookService.getBook(id)
     if not book:
       return response.error("Book Not Found", 404)

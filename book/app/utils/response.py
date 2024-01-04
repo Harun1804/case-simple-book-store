@@ -13,10 +13,9 @@ def error(message = 'Error', status = 400):
   }
   return make_response(jsonify(response)), status
 
-def validateError(values = [], message = 'validate error', code = 422):
+def validateError(message = 'validate error', code = 422):
   response = {
-    'message': message,
-    'data': values
+    'message': message
   }
 
   return make_response(jsonify(response)), code
