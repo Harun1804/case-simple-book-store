@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restx import Api
-from app.docs import BookDoc
+from app.docs import AuthDoc, BookDoc
 
 authorizations = {
   'bearerAuth': {
@@ -21,4 +21,5 @@ api_extension = Api(
   security='bearerAuth'
 )
 
+api_extension.add_namespace(AuthDoc.api, path='/auth')
 api_extension.add_namespace(BookDoc.api, path='/master/books')
