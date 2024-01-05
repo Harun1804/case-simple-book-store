@@ -14,3 +14,9 @@ def update(id, data):
 
 def delete(id):
   return BookService.delete_book(id)
+
+def getAvailableBooks():
+  return BookService.getAvailableBooks()
+
+def updateAvailableBook(id, data):
+  return BookService.updateAvailableBook(id, data)

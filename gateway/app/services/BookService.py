@@ -22,3 +22,11 @@ def update_book(id, data):
 def delete_book(id):
   response = requests.delete(baseUri+'/books/'+str(id))
   return response.json()
+
+def getAvailableBooks():
+  response = requests.get(baseUri+'/books/availability')
+  return response.json()
+
+def updateAvailableBook(id, data):
+  response = requests.put(baseUri+'/books/availability/'+str(id), data=data)
+  return response.json()

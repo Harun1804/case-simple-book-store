@@ -20,3 +20,13 @@ def book(id):
     return BookController.update(id, request.form)
   elif request.method == 'DELETE':
     return BookController.delete(id)
+
+@blueprint.route('/availability', methods=['GET'])
+@jwt_required()
+def availableBooks():
+  return BookController.getAvailableBooks()
+
+@blueprint.route('/availability/<id>', methods=['PUT'])
+@jwt_required()
+def updateAvailableBook(id):
+  return BookController.updateAvailableBook(id, request.form)

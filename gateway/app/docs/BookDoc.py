@@ -11,6 +11,9 @@ parser.add_argument('publisher', type=str, required=True, location='form')
 parser.add_argument('year', type=int, required=True, location='form')
 parser.add_argument('is_available', type=int, required=True, location='form')
 
+parser2 = reqparse.RequestParser()
+parser2.add_argument('is_available', type=int, required=True, location='form')
+
 bookModel = api.model('Book', {
   'title': fields.String(required=True),
   'author': fields.String(required=True),
@@ -66,3 +69,23 @@ class Book(Resource):
   @api.marshal_with(bookModel)
   def delete(self, id):
     return BookController.delete(id)
+
+@api.route('/availability')
+class AvailableBooks(Resource):
+  @api.response(200, 'Success')
+  @api.response(401, 'Unauthorized')
+  @api.marshal_list_with(bookResponseModel)
+  def get(self):
+    return BookController.getAvailableBooks()
+
+@api.route('/availability/<id>')
+class UpdateAvailableBook(Resource):
+  @api.response(200, 'Success')
+  @api.response(401, 'Unauthorized')
+  @api.response(404, 'Book not found')
+  @api.response(422, 'Validation Error')
+  @api.expect(parser2, validate=True)
+  @api.marshal_with(bookModel)
+  def put(self, id):
+    parser2.parse_args()
+    return BookController.updateAvailableBook(id, request.form)
