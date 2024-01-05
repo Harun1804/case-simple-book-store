@@ -14,7 +14,7 @@ def show(id):
   try:
     user = UserService.getUser(id)
     if not user:
-      return response.error("User Not Found", 404)
+      return response.error("User Not Found", status=404)
     return response.success(user, "Success Get User")
   except Exception as e:
     return response.error(str(e))
@@ -30,7 +30,7 @@ def store():
     password = request.form.get('password')
     role = request.form.get('role')
     UserService.storeUser(username, password, role)
-    return response.success([], "User Has Been Created")
+    return response.success([], "User Has Been Created", 201)
   except Exception as e:
     return response.error(str(e))
 
