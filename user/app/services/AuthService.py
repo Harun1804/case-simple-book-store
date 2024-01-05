@@ -27,6 +27,7 @@ def login(data):
   return {
     'access_token': access_token,
     'refresh_token': refresh_token,
+    'type': 'Bearer',
     'user': data,
     'status': True
   }

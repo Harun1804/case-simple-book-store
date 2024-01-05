@@ -17,6 +17,7 @@ loginModel = api.model('Login', {
   "access_token": fields.String(required=True),
   "refresh_token": fields.String(required=True),
   "status": fields.Boolean(required=True),
+  "type": fields.String(required=True),
   "user": authModel
 })
 
