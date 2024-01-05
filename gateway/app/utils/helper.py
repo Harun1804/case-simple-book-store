@@ -9,7 +9,7 @@ def userServiceUri():
   return str(os.environ.get('USER_SERVICE_URI'))
 
 def transactionServiceUri():
-  return str(os.environ.get('TRANSACTION_SERVICE_URI'))
+  return str(os.environ.get('TRANSACTION_SERVICE_URL'))
 
 def appSecretKey():
   return str(os.environ.get('APP_SECRET_KEY'))

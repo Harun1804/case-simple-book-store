@@ -1,6 +1,7 @@
 from app.utils import response
 from flask import request
 from app.services import TransactionService
+from app.Validations import StoreTransactionValidation, UpdateTransactionValidation
 
 def index():
   try:
@@ -20,9 +21,13 @@ def show(id):
 
 def store():
   try:
-    user_id = request.form.get('user_id')
-    borrower_date = request.form.get('borrower_date')
-    books = request.form.getlist('books[]')
+    validation = StoreTransactionValidation.StoreTransactionValidation().validate(request.json)
+    if validation:
+      return response.validateError(validation)
+
+    user_id = request.json['user_id']
+    borrower_date = request.json['borrower_date']
+    books = request.json['books']
     TransactionService.storeTransaction(user_id, borrower_date, books)
     return response.success([], "Transaction Has Been Created")
   except Exception as e:
@@ -30,6 +35,10 @@ def store():
 
 def update(id):
   try:
+    validation = UpdateTransactionValidation.UpdateTransactionValidation().validate(request.form)
+    if validation:
+      return response.validateError(validation)
+
     status = request.form.get('status')
     TransactionService.updateTransaction(id, status)
     return response.success([], "Transaction Has Been Updated")

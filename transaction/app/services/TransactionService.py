@@ -21,7 +21,7 @@ def getTransaction(id):
   return data
 
 def storeTransaction(user_id, borrower_date, books):
-  date = datetime.strptime(borrower_date, "%d-%m-%Y")
+  date = datetime.strptime(borrower_date, "%Y-%m-%d")
   invoice = generate_invoice()
   transaction = Transaction(invoice=invoice, user_id=user_id, transaction_date=datetime.utcnow(), borrower_date=date, due_date=date + timedelta(days=5), status='borrowed')
   db.session.add(transaction)

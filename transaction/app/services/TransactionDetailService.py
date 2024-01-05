@@ -9,10 +9,7 @@ def getTransactionDetails(transaction_id):
   return data
 
 def storeTransactionDetail(transaction_id, books):
-  book_ids = []
-  for book in books:
-    book_ids.extend([int(book_id) for book_id in book.split(',')])
-  for book_id in book_ids:
+  for book_id in books:
     transaction_detail = TransactionDetail(book_id=book_id, transaction_id=transaction_id)
     updateBookAvailability(book_id, 0)
     db.session.add(transaction_detail)
