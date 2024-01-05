@@ -5,7 +5,7 @@ from http import HTTPStatus
 
 api = Namespace('Transaction', description='Transaction service from transaction microservice')
 parser = reqparse.RequestParser()
-parser.add_argument('status', type=str, required=True, location='form')
+parser.add_argument('status', type=str, required=True, location='form', choices=('borrowed', 'returning'), help="Status must be either 'borrowed' or 'returning'")
 
 transactionModel = api.model('Transaction', {
   'id': fields.Integer(required=False),

@@ -7,7 +7,7 @@ api = Namespace('User', description='User service from user microservice')
 parser = reqparse.RequestParser()
 parser.add_argument('username', type=str, required=True, location='form')
 parser.add_argument('password', type=str, required=True, location='form')
-parser.add_argument('role', type=str, required=True, location='form')
+parser.add_argument('role', type=str, required=True, location='form', choices=('admin', 'member'), help="Role must be either 'admin' or 'member'")
 
 userModel = api.model('User', {
   'id': fields.Integer(required=False),

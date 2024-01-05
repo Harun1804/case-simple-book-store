@@ -5,7 +5,7 @@ class UserValidation(Schema):
   id = fields.Int(required=False)
   username = fields.Str(required=True, validate=validate.Length(min=1))
   password = fields.Str(required=False)
-  role = fields.Str(required=True, validate=validate.Length(min=1))
+  role = fields.Str(required=True, validate=validate.OneOf(["admin", "member"]))
 
   @validates('username')
   def validate_username(self, value):
