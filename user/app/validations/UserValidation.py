@@ -10,8 +10,9 @@ class UserValidation(Schema):
   @validates('username')
   def validate_username(self, value):
     user = User.query.filter_by(username=value).first()
-    if user and (self.context.get('id') is None or self.context.get('id') != user.id):
-      raise validate.ValidationError('Username already exists')
+    context_id = int(self.context.get('id')) if self.context.get('id') else None
+    if user and (context_id is None or context_id != user.id):
+        raise validate.ValidationError('Username already exists')
 
   @validates('password')
   def validate_password(self, value):
