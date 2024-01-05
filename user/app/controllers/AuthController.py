@@ -5,7 +5,7 @@ from app.validations import LoginValidation
 
 def login():
   try:
-    validation = LoginValidation.StoreBookValidation().validate(request.form)
+    validation = LoginValidation.LoginValidation().validate(request.form)
     if validation:
       return response.validateError(validation)
     data = AuthService.login(request.form)

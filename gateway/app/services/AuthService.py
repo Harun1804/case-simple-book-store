@@ -6,7 +6,10 @@ baseUri = helper.userServiceUri()
 
 def login(data):
   response = requests.post(baseUri+'/auth/login', data=data)
-  session['token'] = response.json()['result']['access_token']
+  if response.status_code == 200:
+    session['token'] = response.json()['result']['access_token']
+  else:
+    session['token'] = ''
   return response.json()
 
 def userLogin():
