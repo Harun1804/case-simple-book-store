@@ -1,6 +1,7 @@
 from app.utils import response
 from flask import request
 from app.services import UserService
+from app.validations import UserValidation
 
 def index():
   try:
@@ -20,6 +21,11 @@ def show(id):
 
 def store():
   try:
+    validation = UserValidation.UserValidation()
+    errors = validation.validate(request.form)
+    if errors:
+      return response.validateError(errors)
+
     username = request.form.get('username')
     password = request.form.get('password')
     role = request.form.get('role')
@@ -30,6 +36,16 @@ def store():
 
 def update(id):
   try:
+    user = UserService.getUser(id)
+    if not user:
+      return response.error("User Not Found", 404)
+
+    validation = UserValidation.UserValidation()
+    validation.context = {'id': id}
+    errors = validation.validate(request.form, partial=('password',))
+    if errors:
+      return response.validateError(errors)
+
     username = request.form.get('username')
     password = request.form.get('password')
     role = request.form.get('role')
