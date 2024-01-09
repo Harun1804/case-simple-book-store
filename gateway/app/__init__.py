@@ -9,6 +9,9 @@ app = Flask(__name__)
 app.secret_key = helper.appSecretKey()
 app.config.from_object(Config)
 extension.jwt.init_app(app)
+@app.route('/')
+def index():
+  return 'Harun Tampan'
 
 app.register_blueprint(AuthRoute.blueprint)
 app.register_blueprint(BookRoute.blueprint)
