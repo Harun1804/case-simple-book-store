@@ -2,6 +2,7 @@ from flask import request
 from flask_restx import Namespace, Resource, fields, reqparse
 from app.controllers import BookController
 from http import HTTPStatus
+import werkzeug
 
 api = Namespace('Book', description='Book service from bookstore microservice')
 parser = reqparse.RequestParser()
@@ -10,6 +11,7 @@ parser.add_argument('author', type=str, required=True, location='form')
 parser.add_argument('publisher', type=str, required=True, location='form')
 parser.add_argument('year', type=int, required=True, location='form')
 parser.add_argument('is_available', type=int, required=True, location='form')
+parser.add_argument('thumbnail', type=werkzeug.datastructures.FileStorage, required=False, location='files')
 
 parser2 = reqparse.RequestParser()
 parser2.add_argument('is_available', type=int, required=True, location='form')

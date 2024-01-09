@@ -9,7 +9,17 @@ def books():
   if request.method == 'GET':
     return BookController.index()
   elif request.method == 'POST':
-    return BookController.create(request.form)
+    data = {
+      'title': request.form.get('title'),
+      'author': request.form.get('author'),
+      'publisher': request.form.get('publisher'),
+      'year': request.form.get('year'),
+      'is_available': request.form.get('is_available'),
+    }
+    files = {
+      'thumbnail': request.files.get('thumbnail')
+    }
+    return BookController.create(data, files)
 
 @blueprint.route('/<id>', methods=['GET','PUT','DELETE'])
 @jwt_required()
@@ -17,7 +27,22 @@ def book(id):
   if request.method == 'GET':
     return BookController.show(id)
   elif request.method == 'PUT':
-    return BookController.update(id, request.form)
+    data = {
+      'title': request.form.get('title'),
+      'author': request.form.get('author'),
+      'publisher': request.form.get('publisher'),
+      'year': request.form.get('year'),
+      'is_available': request.form.get('is_available'),
+    }
+
+    files = {
+      'thumbnail': request.files.get('thumbnail')
+    }
+
+    if files['thumbnail'] is None:
+      return BookController.update(id, data, files)
+    else: 
+      return BookController.update(id, data)
   elif request.method == 'DELETE':
     return BookController.delete(id)
 

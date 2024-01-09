@@ -8,6 +8,7 @@ class Book(db.Model):
   publisher = db.Column(db.String(100), nullable=False)
   year = db.Column(db.Integer, nullable=False)
   is_available = db.Column(db.Boolean, default=True)
+  thumbnail = db.Column(db.String(100), nullable=True)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 

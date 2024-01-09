@@ -11,12 +11,16 @@ def get_book(id):
   response = requests.get(baseUri+'/books/'+str(id))
   return response.json()
 
-def create_book(data):
-  response = requests.post(baseUri+'/books', data=data)
+def create_book(data, files):
+  response = requests.post(baseUri+'/books', data=data, files=files)
   return response.json()
 
-def update_book(id, data):
-  response = requests.put(baseUri+'/books/'+str(id), data=data)
+def update_book(id, data, files=None):
+  if files is None:
+    print(files)
+    response = requests.put(baseUri+'/books/'+str(id), data=data)
+  else:
+    response = requests.put(baseUri+'/books/'+str(id), data=data, files=files)
   return response.json()
 
 def delete_book(id):
