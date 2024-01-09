@@ -2,6 +2,10 @@ from app import app
 from flask import request
 from app.controllers import TransactionController
 
+@app.route('/', methods=['GET'])
+def index():
+  return 'Harun Tampan'
+
 @app.route('/transactions', methods=['GET','POST'])
 def transactions():
   if request.method == 'GET':
